@@ -15,7 +15,7 @@ export default function Chartx() {
             justifyContent:'center',
             alignItems:'center',
             paddingTop:25,
-            bordercolor: '#FFFFFF',
+            
            
             
         }}>
