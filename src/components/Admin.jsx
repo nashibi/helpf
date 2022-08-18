@@ -8,6 +8,7 @@ import Chartx from "./Admin/Chart";
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
+import NewPost from "./Admin/NewPost";
 
 const darkTheme = createTheme({
     palette: {
@@ -34,7 +35,9 @@ export default function Admin() {
                         <Grid item xs={12}>
                             <Navbar />
                         </Grid>
-                       
+                       <Grid item xs={12}>
+                           <NewPost />
+                       </Grid>
                         <Grid item xs={6} sx={{ m: 2 }}>
                             <Data />
                         </Grid>
