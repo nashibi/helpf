@@ -1,40 +1,72 @@
 import React from "react";
-import Paper from '@material-ui/core/Paper';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import Chart from 'react-google-charts';
-import { ThemeProvider } from "@material-ui/styles";
 
-  
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const data = {
-  labels: ['user', 'admin'],
+  labels: [
+    'Red',
+    'Blue',
+    'Yellow'
+  ],
   datasets: [
     {
-      label: '# of Votes',
-      data: [12, 2],
+      label: 'My First Dataset',
+      data: [300, 50, 100],
       backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)'
       ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-      ],
+      hoverOffset: 1,
       borderWidth: 1,
-    },
+    }
   ],
 };
 
 export default function Chartx() {
-  return <Doughnut data={data} />;
+  return <Doughnut
+    data={data}
+    options={
+      {
+
+        plugins: {
+          legend: {
+            labels: {
+              color: "#fff",
+              generateLabels(chart) {
+                const data = chart.data;
+                if (data.labels.length && data.datasets.length) {
+                  const { labels: { pointStyle } } = chart.legend.options;
+
+                  return data.labels.map((label, i) => {
+                    const meta = chart.getDatasetMeta(0);
+                    const style = meta.controller.getStyle(i);
+
+                    return {
+                      text: label + '-' + chart.data.datasets[0].data[i],
+                      fillStyle: style.backgroundColor,
+                      strokeStyle: style.borderColor,
+                      lineWidth: style.borderWidth,
+                      pointStyle: pointStyle,
+                      hidden: !chart.getDataVisibility(i),
+
+                      index: i
+                    };
+                  });
+                }
+                return [];
+              },
+            },
+            display: true,
+            position: "bottom",
+            align: "center",
+            fontFamily: "Arial",
+          }
+        }
+      }
+    }
+  />;
 }
