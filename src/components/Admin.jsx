@@ -5,10 +5,12 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { colors, Grid } from "@mui/material";
 import RefMassage from "./Admin/RefMassage";
 import Chartx from "./Admin/Chart";
+import Chartx2 from "./Admin/Chartx2";
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import NewPost from "./Admin/NewPost";
+import Category from "./Admin/Category";
 
 const darkTheme = createTheme({
     palette: {
@@ -35,15 +37,18 @@ export default function Admin() {
                         <Grid item xs={12}>
                             <Navbar />
                         </Grid>
-                       <Grid item xs={12}>
+                       <Grid item xs={5.2}>
                            <NewPost />
+                       </Grid>
+                       <Grid item xs={6.8}>
+                           <Category />
                        </Grid>
                         <Grid item xs={6} sx={{ m: 2 }}>
                             <Data />
                         </Grid>
                         <Grid item xs={3} sx={{ m: 2 }}  >
                            
-                            <Chartx />
+                            <Chartx2 />
                             
                         </Grid>
                         <Grid>
