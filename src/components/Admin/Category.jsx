@@ -11,6 +11,10 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
 
 const useStyles = makeStyles((theme) => ({
     form1: {
@@ -34,9 +38,10 @@ export default function Category() {
     const [valueC, setValueC] = React.useState(false);
     const [valuelink, setValuelink] = React.useState();
     const [category,setcategory]=React.useState([
-    { id: 1, name: "John Doe" },
-    { id: 2, name: "Victor Wayne" },
-    { id: 3, name: "Jane Doe" },
+    { id: 1, name: "موبایل",father:"" },
+    { id: 2, name: "قاب موبایل",father:"" },
+    { id: 3, name: "کنسول" , father:""},
+    { id: 4, name: "ایفون" , father:"موبایل"},
 
     ]);
 
@@ -111,8 +116,8 @@ export default function Category() {
           onChange={handleChange}
         >
           
-          {category.map((name) => (
-        <MenuItem value={name}>
+          {category.map(({id,name}) => (
+        <MenuItem value={id}>
             {name}
             </MenuItem>
       ))}
@@ -123,7 +128,32 @@ export default function Category() {
         </FormControl>
         }
       </label>
-      
+      <List
+      sx={{
+        width: '100%',
+        maxWidth: 360,
+        bgcolor: 'background.paper',
+        position: 'relative',
+        color:"#ffffff",
+        overflow: 'auto',
+        maxHeight: 300,
+        '& ul': { padding: 0 },
+      }}
+      subheader={<li />}
+    >
+      {category.map(({id,father}) => (
+        <li key={`section-${id}`}  >
+          <ul>
+            <ListSubheader>{`${father}`}</ListSubheader>
+            {category.map(({id,name}) => (
+              <ListItem key={`-${id}-${name}`}>
+                <ListItemText primary={` ${name}`} />
+              </ListItem>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </List>
     </Box>
     
   );
