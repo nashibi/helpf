@@ -17,145 +17,155 @@ import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 
 const useStyles = makeStyles((theme) => ({
-    form1: {
-      
-        display:"flex",
-        alignItems:"center",
-        color:"#ffffff"
-     
-    },
-    form2: {
-      
-        display:"flex",
-        alignItems:"center",
-        color:"#ffffff"
-     
-    },
-  }))
-export default function Category() {
-    const classes = useStyles();
-    const [age, setAge] = React.useState('');
-    const [valueC, setValueC] = React.useState(false);
-    const [valuelink, setValuelink] = React.useState();
-    const [category,setcategory]=React.useState([
-    { id: 1, name: "موبایل",father:"" },
-    { id: 2, name: "قاب موبایل",father:"" },
-    { id: 3, name: "کنسول" , father:""},
-    { id: 4, name: "ایفون" , father:"موبایل"},
+  form1: {
 
-    ]);
-
+    display: "flex",
+    alignItems: "center",
     
-    const handleChangeca = (event) => {
-        setValueC(event.target.value);
-        console.log(setValueC)
-      };
+    color: "#ffffff"
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  },
+  form2: {
+
+    display: "flex",
+    alignItems: "center",
+    color: "#ffffff"
+
+  },
+}))
+export default function Category() {
+  const classes = useStyles();
+  const [id, setid] = React.useState(7);
+  const [catName, setCatName] = React.useState("");
+  const [mother, setMother] = React.useState(0);
+  const [categoriesList, setCategories] = React.useState([
+    {
+      id: 1,
+      name: "موبایل",
+      children: [
+        {
+          id: 4,
+          name: "ایفون"
+        },
+        {
+          id: 5,
+          name: "سامسونگ"
+        },
+      ]
+    },
+    {
+      id: 2,
+      name: "قاب موبایل",
+      children: [],
+    },
+    {
+      id: 3,
+      name: "کنسول",
+      children: [
+        {
+          id: 6,
+          name: "سونی"
+        },
+      ],
+    },
+  ]);
+
+
+
+
+  const handleChangeMother = (event) => {
+    setMother(event.target.value);
   };
-      
+  const handleChangetx = (event) => {
+    setCatName(event.target.value);
+  };
+  const handleSubmit=(e)=>{
+        
+        setCategories(
+          [...categoriesList, {
+                    id,
+                    catName,
+                    children: []
+          }]
+          )
+          console.log(categoriesList)
+       
+  }
+
   return (
     <Box
-    component="form"
-    sx={{
-      '& .MuiTextField-root': { m: 1, width: '25ch' },
-      width: 800,
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+        width: 800,
         height: 500,
         border: 2,
         borderColor: 'grey.500',
-        p:2,
-        m:2,
+        p: 2,
+        m: 2,
         borderRadius: '16px'
-    }}
-    noValidate
-    autoComplete="off"
-    
-  >
-        <label className={classes.form1} >
-            نام دسته
-    
-         
-        <TextField
-            className={classes.form1}
-          required
-          id="outlined-required"
-          label="Required"
-          defaultValue="Hello World"
-        />
-        
-        <label class={classes.form1}>
-            دسته پدر؟
-        </label>
-        <FormControl  required sx={{ m: 1, minWidth: 190 }}>
-        <InputLabel  className={classes.form1}  id="demo-simple-select-required-label">ندارد</InputLabel>
-        <Select
-           
-          labelId="demo-simple-select-required-label"
-          id="demo-simple-select-required"
-          value={valueC}
-          label="Age *"
-          onChange={handleChangeca}
-        >
-          
-          <MenuItem value={false} > ندارد</MenuItem>
-          <MenuItem value={true} >دارد</MenuItem>
-          
-          
-        </Select>
-        
-      </FormControl>
-      {valueC && <FormControl  required sx={{ m: 1, minWidth: 190 }}>
-        <InputLabel  className={classes.form1}  id="demo-simple-select-required-label">ندارد</InputLabel>
-        <Select
-           
-          labelId="demo-simple-select-required-label"
-          id="demo-simple-select-required"
-          value={age}
-          label="Age *"
-          onChange={handleChange}
-        >
-          
-          {category.map(({id,name}) => (
-        <MenuItem value={id}>
-            {name}
-            </MenuItem>
-      ))}
-          
-          
-          
-        </Select>
-        </FormControl>
-        }
-      </label>
-      <List
-      sx={{
-        width: '100%',
-        maxWidth: 360,
-        bgcolor: 'background.paper',
-        position: 'relative',
-        color:"#ffffff",
-        overflow: 'auto',
-        maxHeight: 300,
-        '& ul': { padding: 0 },
       }}
-      subheader={<li />}
+      noValidate
+      autoComplete="off"
+
     >
-      {category.map(({id,father}) => (
-        <li key={`section-${id}`}  >
-          <ul>
-            <ListSubheader>{`${father}`}</ListSubheader>
-            {category.map(({id,name}) => (
-              <ListItem key={`-${id}-${name}`}>
-                <ListItemText primary={` ${name}`} />
-              </ListItem>
-            ))}
-          </ul>
-        </li>
-      ))}
-    </List>
+
+      <form className={classes.form1}>
+      <TextField
+        
+        required
+        label="عنوان دسته"
+        value={catName}
+        onChange={handleChangetx}
+      />
+
+      <FormControl required sx={{ m: 1, minWidth: 190 }}>
+        <InputLabel >دسته مادر</InputLabel>
+        <Select
+          value={mother}
+          label="دسته مادر"
+          onChange={handleChangeMother}
+        >
+          <MenuItem value={0}>هیچکدام</MenuItem>
+          {categoriesList.map(({ id, name }) => (
+            <MenuItem value={id}>
+              {name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <Button variant="contained" onSubmit={handleSubmit} >افزودن</Button>
+      </form>
+
+
+      <List
+        sx={{
+          width: '100%',
+          bgcolor: 'background.paper',
+          position: 'relative',
+          color: "#ffffff",
+          overflow: 'auto',
+          maxHeight: 300,
+          '& ul': { padding: 0 },
+        }}
+        subheader={<li />}
+      >
+        {categoriesList.map(({ id: motherID, name: motherName, children }) => (
+          <li key={`section-${motherID}`}>
+            <ul>
+              <ListSubheader>{`${motherName}`}</ListSubheader>
+              {children.map(({ id, name }) => (
+                <ListItem key={`-${id}-${name}`} sx={{ textAlign: "right" }}>
+                  <ListItemText primary={` ${name}`} />
+                </ListItem>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </List>
+      
     </Box>
-    
+
   );
-  
+
 }
