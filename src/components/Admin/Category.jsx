@@ -157,7 +157,8 @@ export default function Category() {
               {children.map(({ id, name }) => (
                 <ListItem key={`-${id}-${name}`} sx={{ textAlign: "right" }}>
                   <ListItemText primary={` ${name}`} />
-                </ListItem>
+                </ListItem> 
+                
               ))}
             </ul>
           </li>
