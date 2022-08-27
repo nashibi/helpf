@@ -12,8 +12,10 @@ import Box from '@mui/material/Box';
 import { borders } from '@mui/system';
 import MuiAlert, { AlertProps, AlertColor } from '@mui/material/Alert';
 import { Grid } from '@mui/material';
-
-
+import Modal from '@mui/material/Modal';
+import { Editor } from "@tinymce/tinymce-react";
+import TextboxSP from './TextboxSP';
+import SelectPic from './SelectPic';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,12 +39,25 @@ const useStyles = makeStyles((theme) => ({
   },
   box:{
     display: 'flex',
-    
+    p:2,
+    m:2,
     alignItems:"center",
     
   },
 }));
-
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 600,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+  textAlign: 'center',
+  alignItems:'center',
+};
 const plyrProps = {
     URL: "https://www.youtube.com/watch?v=BS2SjDBMD_k"
   }
@@ -55,12 +70,22 @@ const plyrProps = {
     
   });
 export default function Helppost(){
-
+ 
+  const [modalopen, setModalopen] = useState(false);
+  
   const [open, setOpen] = useState(false);
-   
+  const [pic, setPic] = useState("");
   const classes = useStyles();
   const [value, setValue] = React.useState('Controlled');
   
+  const handleModalopen = () => {
+  console.log(modalopen)
+  setModalopen(true);
+};
+  const handleModalClose = () => {
+    setModalopen(false);
+    console.log(modalopen)
+  };
   const handleChange = (event) => {
     setValue(event.target.value);
   };
@@ -71,6 +96,10 @@ export default function Helppost(){
   };
   const handleClick = () => {
     setOpen(true);
+  };
+  const handlePic = () => {
+    setPic("https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/IMG_Academy_Logo.svg/1200px-IMG_Academy_Logo.svg.png");
+    console.log(pic);
   };
   
 
@@ -88,7 +117,7 @@ export default function Helppost(){
           
           <form className={classes.roowt} noValidate autoComplete="off">
             
-            <Grid  >
+            <Grid sx={{mr:2,ml:2}}  >
               <Box bgcolor='#ffccbc' className={classes.box} sx={{ border: 1, borderRadius:'16px',borderColor: '#dd2c00'}}>
               
                 <Grid  sm={2} sx={{ p: 2, borderLeft:2,borderColor: '#dd2c00'}} >
@@ -116,15 +145,26 @@ export default function Helppost(){
             
             
             <Grid py={{xs:2}}>
-            <Box  border={1} borderRadius={16} className={classes.text}    sx={{mr:4,ml:4}} >
+            <Box  className={classes.text}    sx={{mr:4,ml:4}} >
             
-            <TextField fullWidth 
-            id="standard-multiline-static"
-            label="نظرات"
-            multiline
-            rows={4}
-            defaultValue="نظر خود را ثبت کنید"
-            />
+            <Button size="medium" variant='contained' onClick={handleModalopen}>
+              افزودن عکس
+              
+            </Button> 
+            <Modal
+                  open={modalopen}
+                  onClose={handleModalClose}
+                  
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style}>
+                <SelectPic />
+              </Box>
+                </Modal>
+             <TextboxSP addImg={pic} />
+             
+     
             
             </Box>
             <Box dir='ltr' py={{xs:2}}  px={{xs:2}}>

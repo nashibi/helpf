@@ -15,6 +15,8 @@ import Apagination from './components/pagination';
 import { BrowserRouter,Router,Route,Routes  } from 'react-router-dom'
 import Homer from './Homer';
 import Admin from './components/Admin';
+import TextboxSP from './components/TextboxSP';
+
 
 
 
@@ -25,6 +27,8 @@ ReactDOM.render(
       <Route exact  path="/" element={<Homer />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="invoices" element={<Homer />} />
+      <Route path="/post" element={<TextboxSP />} />
+      
     </Routes>
       
     
