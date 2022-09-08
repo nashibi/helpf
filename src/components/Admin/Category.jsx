@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
     display: "flex",
     alignItems: "center",
-    
+
     color: "#ffffff"
 
   },
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 export default function Category() {
   const classes = useStyles();
-  const [id, setid] = React.useState(7);
+  // const [id, setid] = React.useState(7);
   const [catName, setCatName] = React.useState("");
   const [mother, setMother] = React.useState(0);
   const [categoriesList, setCategories] = React.useState([
@@ -76,20 +76,36 @@ export default function Category() {
   const handleChangeMother = (event) => {
     setMother(event.target.value);
   };
+
   const handleChangetx = (event) => {
     setCatName(event.target.value);
   };
-  const handleSubmit=(e)=>{
-        
-        setCategories(
-          [...categoriesList, {
-                    id,
-                    catName,
-                    children: []
-          }]
-          )
-          console.log(categoriesList)
-       
+
+  const handleSubmit = (e) => {
+    // alert(mother)
+    // alert(catName)
+
+    const objCat = {
+      id: 8,
+      name: catName,
+    }
+    if (mother > 0) {
+      // const motherObj = categoriesList.filter(({ id }) => id === mother)
+      let motherIndex = categoriesList.findIndex(x => x.id === mother);
+      let mm = [...categoriesList]
+      mm[motherIndex].children.push(objCat)
+      setCategories(mm)
+    }
+    else {
+      setCategories([
+        ...categoriesList,
+        {
+          ...objCat,
+          children: []
+        }
+      ])
+    }
+
   }
 
   return (
@@ -111,30 +127,31 @@ export default function Category() {
     >
 
       <form className={classes.form1}>
-      <TextField
-        
-        required
-        label="عنوان دسته"
-        value={catName}
-        onChange={handleChangetx}
-      />
+        <TextField
+          required
+          label="عنوان دسته"
+          value={catName}
+          onChange={handleChangetx}
+        />
 
-      <FormControl required sx={{ m: 1, minWidth: 190 }}>
-        <InputLabel >دسته مادر</InputLabel>
-        <Select
-          value={mother}
-          label="دسته مادر"
-          onChange={handleChangeMother}
-        >
-          <MenuItem value={0}>هیچکدام</MenuItem>
-          {categoriesList.map(({ id, name }) => (
-            <MenuItem value={id}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <Button variant="contained" onSubmit={handleSubmit} >افزودن</Button>
+        <FormControl required sx={{ m: 1, minWidth: 190 }}>
+          <InputLabel >دسته مادر</InputLabel>
+          <Select
+            value={mother}
+            label="دسته مادر"
+            onChange={handleChangeMother}
+          >
+            <MenuItem value={0}>هیچکدام</MenuItem>
+            {categoriesList.map(({ id, name }) => (
+              <MenuItem value={id}>
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <Button variant="contained" onClick={handleSubmit}>افزودن</Button>
+
       </form>
 
 
@@ -157,14 +174,14 @@ export default function Category() {
               {children.map(({ id, name }) => (
                 <ListItem key={`-${id}-${name}`} sx={{ textAlign: "right" }}>
                   <ListItemText primary={` ${name}`} />
-                </ListItem> 
-                
+                </ListItem>
+
               ))}
             </ul>
           </li>
         ))}
       </List>
-      
+
     </Box>
 
   );
