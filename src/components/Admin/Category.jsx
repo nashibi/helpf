@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 export default function Category() {
   const classes = useStyles();
-  // const [id, setid] = React.useState(7);
+
   const [catName, setCatName] = React.useState("");
   const [mother, setMother] = React.useState(0);
   const [categoriesList, setCategories] = React.useState([
@@ -69,6 +69,7 @@ export default function Category() {
       ],
     },
   ]);
+  const [increID, setIncreID] = React.useState(7);
 
 
 
@@ -86,7 +87,7 @@ export default function Category() {
     // alert(catName)
 
     const objCat = {
-      id: 8,
+      id: increID,
       name: catName,
     }
     if (mother > 0) {
@@ -105,6 +106,7 @@ export default function Category() {
         }
       ])
     }
+    setIncreID(increID++)
 
   }
 
